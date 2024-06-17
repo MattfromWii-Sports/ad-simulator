@@ -3,3 +3,24 @@
     border: none;
     margin: 0;
 }
+
+.ad-container {
+    min-height: 100svh;
+}
+
+/*ad styles*/
+.ad {
+    position: absolute;
+}
+
+/* will have 5 types of ads */
+
+/*normal*/
+
+/*big*/
+
+/*small*/
+
+/*long*/
+
+/*short*/
