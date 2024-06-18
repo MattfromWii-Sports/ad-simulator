@@ -43,3 +43,4 @@ function createAds(adsArray) {
 adContainer.addEventListener('click', (e) => {
     console.log(e.target);
 });
+
