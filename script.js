@@ -21,12 +21,40 @@ const game = (() => {
         }
     }
 
-    //creates the ad object, pushes it to the ads array
-    function buildAd(text, adStyle) {
-        //other attribute will be randomly generated
-        function randomColor() {
+    //ad text options: 10 variations
+    const adText = ['Buy Now!', 'Click Me!', 'Free Money', 'Send Help pls, there is an armed intruder...', 'Women in the area', 'Dogs in the area', 'Free Ram Upgrades', 'Hotel Travel!!!', '90% Discount', 'Tap Me :) or else...'];
+    //ad style option: 5 variations
+    const adStyles = ['normal'];
 
-        }
+    //randomly creates the ad object, pushes it to the ads array
+    function buildRandomAd() {
+        console.log(randomText());
+        console.log(randomColor());
+        console.log(randomAdStyle());
+    }
+
+    //randomly chooses attributes
+    //picks a random number within the given max value
+    function randomMax(max) {
+        return Math.floor(Math.random() * max);
+    }
+    function randomText() {
+        //based on adText array length, automatically updates range
+        return adText[randomMax(adText.length)];
+    }
+    function randomColor() {
+        //return rgb values
+        return `rgb(${randomMax(255)}, ${randomMax(255)}, ${randomMax(255)})`;
+    }
+    function randomAdStyle() {
+        return adStyles[randomMax(adStyles.length)];
+    }
+    //for top and left properties (position: absolute)
+    function randomLeft() {
+
+    }
+    function randomTop() {
+
     }
 
     //puts ad objects inside the ads array
@@ -39,7 +67,7 @@ const game = (() => {
     }
 
     //iterates through ads array & creates visuals
-    function createAds(adsArray) {
+    function renderAds(adsArray) {
 
     }
 
@@ -47,6 +75,8 @@ const game = (() => {
     adContainer.addEventListener('click', (e) => {
         console.log(e.target);
     });
+
+    buildRandomAd();
 
 })();
 
