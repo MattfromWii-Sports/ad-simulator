@@ -35,26 +35,27 @@ body {
 .normal {
     width: 18rem;
     height: 15rem;
-    /* remove later */
-    top: 50vh;
-    left: 50vw;
 }
-
 /*big*/
 .big {
     width: 36rem;
     height: 30rem;
 }
-
 /*small*/
 .small {
     width: 10rem;
     height: 9rem;
 }
-
 /*long*/
-
+.long {
+    width: 15rem;
+    height: 34rem;
+}
 /*short*/
+.short {
+    width: 14rem;
+    height: 8rem;
+}
 
 .top {
     display: flex;
@@ -106,20 +107,33 @@ body {
     font-size: 2.5rem;
 }
 
-.small .middle {
+.small .middle,
+.short .middle {
     padding: 0.5rem 0.6rem;
 }
-.small p {
+.small p,
+.short p {
     font-size: 0.9rem;
 }
-.small .x-btn {
+.small .x-btn,
+.long .x-btn,
+.short .x-btn {
     font-size: 0.9rem;
     padding: 0.6rem;
 }
 .small .bottom {
     padding: 0.5rem;
 }
-.small .bottom button{
+.small .bottom button,
+.short .bottom button{
     padding: 4px;
     font-size: 0.75rem;
+}
+
+.long p {
+    font-size: 1.5rem;
+}
+.long .bottom button{
+    padding: 1rem;
+    font-size: 1rem;
 }
