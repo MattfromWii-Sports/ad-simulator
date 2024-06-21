@@ -9,20 +9,26 @@ html {
     font-size: 14px;
 }
 body {
-    overflow-x: hidden;
+    overflow: hidden;
     min-height: 100svh;
 }
 .ad-container {
     width: 100%;
     height: 100%;
     position: absolute;
+    --short-height: 9rem;
+    --medium-height: 15rem;
+    --long-height: 30rem;
+    --short-width: 10rem;
+    --medium-width: 18rem;
+    --long-width: 36rem;
 }
 
 /*ad styles*/
 .ad {
     position: absolute;
     display: grid;
-    grid-template-rows: 1fr 2fr 2fr;
+    grid-template-rows: auto 1fr 1fr;
     border: 2px solid white;
     border-radius: 8px;
     /*remove later*/
@@ -30,31 +36,31 @@ body {
 }
 
 /* will have 5 types of ads */
-
+/* Fututre note: maybe replace them with css variables ;) */
 /*normal*/
 .normal {
-    width: 18rem;
-    height: 15rem;
+    width: var(--medium-width);
+    height: var(--medium-height);
 }
 /*big*/
 .big {
-    width: 36rem;
-    height: 30rem;
+    width: var(--long-width);
+    height: var(--long-height);
 }
 /*small*/
 .small {
-    width: 10rem;
-    height: 9rem;
+    width: var(--short-width);
+    height: var(--short-height);
 }
 /*long*/
 .long {
-    width: 15rem;
-    height: 34rem;
+    width: var(--medium-width);
+    height: var(--long-height);
 }
 /*short*/
 .short {
-    width: 14rem;
-    height: 8rem;
+    width: var(--medium-width);
+    height: var(--short-height);
 }
 
 .top {
@@ -70,6 +76,9 @@ body {
     font-size: 1.6rem;
 }
 .middle {
+    display: flex;
+    justify-content: center;
+    align-items: center;
     padding: 1.5rem 1rem;
     word-wrap: normal;
     text-align: center;
@@ -111,8 +120,7 @@ body {
 .short .middle {
     padding: 0.5rem 0.6rem;
 }
-.small p,
-.short p {
+.small p {
     font-size: 0.9rem;
 }
 .small .x-btn,
@@ -124,8 +132,7 @@ body {
 .small .bottom {
     padding: 0.5rem;
 }
-.small .bottom button,
-.short .bottom button{
+.small .bottom button {
     padding: 4px;
     font-size: 0.75rem;
 }
@@ -136,4 +143,12 @@ body {
 .long .bottom button{
     padding: 1rem;
     font-size: 1rem;
+}
+
+.short p {
+    font-size: 1.2rem;
+}
+.short .bottom button {
+    padding: 4px;
+    font-size: 0.8rem;
 }
