@@ -21,7 +21,7 @@ const game = (() => {
         }
     }
 
-    //ad text options: 10 variations
+    //ad text options
     const adText = ['Buy Now!', 'Click Me!', 'Free Money', 'Send Help pls, there is an armed intruder...', 'Women in the area', 'Dogs in the area', 'Free Ram Upgrades', 'Hotel Travel!!!', '90% Discount', 'Tap Me :) or else...', ':))))))'];
 
     //ad style option: 5 variations (objects)
@@ -33,41 +33,40 @@ const game = (() => {
     const adContainerCompStyles = window.getComputedStyle(adContainer);
     //returns computed width and heights of corresponding ad style
     //calculates rem to pixels :)
-    function getHeight(style) {
-        //replace(), removes all non digit characters 
-        const short = adContainerCompStyles.getPropertyValue('--short-height').replace(/\D/g, '');
-        const medium = adContainerCompStyles.getPropertyValue('--medium-height').replace(/\D/g, '');
-        const long = adContainerCompStyles.getPropertyValue('--long-height').replace(/\D/g, '');
+    //replace(...), removes all non digits like 'px'
+    const shortW = adContainerCompStyles.getPropertyValue('--short-width').replace(/\D/g, '');
+    const mediumW = adContainerCompStyles.getPropertyValue('--medium-width').replace(/\D/g, '');
+    const longW = adContainerCompStyles.getPropertyValue('--long-width').replace(/\D/g, '');
+    function getWidth(style) {
         switch(style) {
             // +4 to account for the borders (2px both sides)
-            case 'normal': return medium * rem + 4;
-            case 'big': return long * rem + 4;
-            case 'small':
-            case 'short': return short * rem + 4;
-            case 'long': return long * rem + 4;
+            case 'normal': return mediumW * rem + 4;
+            case 'big': return longW * rem + 4;
+            case 'small': return shortW * rem + 4;
+            case 'short': 
+            case 'long': return mediumW * rem + 4;
             default: console.log('bruh that is not a style');
         }
     }
-    function getWidth(style) {
-        const short = adContainerCompStyles.getPropertyValue('--short-width').replace(/\D/g, '');
-        const medium = adContainerCompStyles.getPropertyValue('--medium-width').replace(/\D/g, '');
-        const long = adContainerCompStyles.getPropertyValue('--long-width').replace(/\D/g, '');
+    const shortH = adContainerCompStyles.getPropertyValue('--short-height').replace(/\D/g, '');
+    const mediumH = adContainerCompStyles.getPropertyValue('--medium-height').replace(/\D/g, '');
+    const longH = adContainerCompStyles.getPropertyValue('--long-height').replace(/\D/g, '');
+    function getHeight(style) {      
         switch(style) {
             // +4 to account for the borders (2px both sides)
-            case 'normal': return medium * rem + 4;
-            case 'big': return long * rem + 4;
-            case 'small': return short * rem + 4;
-            case 'short': 
-            case 'long': return medium * rem + 4;
+            case 'normal': return mediumH * rem + 4;
+            case 'big': return longH * rem + 4;
+            case 'small':
+            case 'short': return shortH * rem + 4;
+            case 'long': return longH * rem + 4;
             default: console.log('bruh that is not a style');
         }
     }
 
     //randomly creates the ad object, pushes it to the ads array
     function buildRandomAd() {
-        console.log(randomText());
-        console.log(randomColor());
-        console.log(randomAdStyle());
+        let x = randomAdStyle();
+        addToAds(new ad(randomText(), randomColor(), x, randomLeft(x), randomTop(x)));
     }
 
     //randomly chooses attributes
@@ -88,16 +87,20 @@ const game = (() => {
     }
     //for top and left properties (position: absolute)
     //will account for different style width & heights to avoid going out of border
+    const gameWidth = adContainerCompStyles.width.replace(/\D/g, '');
+    const gameHeight = adContainerCompStyles.height.replace(/\D/g, '');
+    //why does it keep on repeating value???
+    //that is a problem for tommorow me, good luck:)
     function randomLeft(style) {
-
+        return Math.max(0, gameWidth - getWidth(style));
     }
     function randomTop(style) {
-
+        return Math.max(0, gameHeight - getHeight(style));
     }
 
     //puts ad objects inside the ads array
     function addToAds(adObject) {
-
+        ads.push(adObject);
     }
     //removes ad object inside ads array
     function removeFromAds(index) {
@@ -115,7 +118,9 @@ const game = (() => {
     });
 
     buildRandomAd();
-
+    buildRandomAd();
+    buildRandomAd();
+    console.log(ads);
 })();
 
 
