@@ -15,10 +15,6 @@ const game = (() => {
             this.left = x;
             this.top = y;
         }
-        clicked() {
-            //create an ad when clicked (not x button)
-            buildRandomAd();
-        }
     }
 
     //ad text options
@@ -108,9 +104,13 @@ const game = (() => {
     function removeFromAds(index) {
         ads.splice(index, 1);
     }
+    function clearGame() {
+        adContainer.innerHTML = ''; //remove existing generated html
+    }
 
     //iterates through ads array & creates visuals
     function renderAds() {
+        clearGame();
         for(let i = 0; i < ads.length; i++) {
             const currentAd = ads[i];
             const container = document.createElement('div');
@@ -141,11 +141,24 @@ const game = (() => {
             middle.appendChild(text);
             bottom.appendChild(moreBtn);
         }
+        //remove later
+        console.log(ads);
     }
 
     //will use event delegation to detect buttons
     adContainer.addEventListener('click', (e) => {
-        console.log(e.target);
+        const clicked = e.target;
+        //if the x button is clicked
+        if(clicked.nodeName == 'BUTTON' && clicked.classList.contains('x-btn')) {
+            const index = clicked.parentNode.parentNode.dataset.index;
+            removeFromAds(index);
+            renderAds();
+        //if anything within the ad other than x is clicked
+        } else if(clicked.closest('.ad')) {
+            buildRandomAd();
+            buildRandomAd();
+            renderAds();
+        }
     });
 
     buildRandomAd();
