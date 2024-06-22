@@ -17,7 +17,7 @@ const game = (() => {
         }
         clicked() {
             //create an ad when clicked (not x button)
-
+            buildRandomAd();
         }
     }
 
@@ -69,7 +69,7 @@ const game = (() => {
 
     //randomly creates the ad object, pushes it to the ads array
     function buildRandomAd() {
-        let x = randomAdStyle();
+        const x = randomAdStyle();
         addToAds(new ad(randomText(), randomColor(), x, randomLeft(x), randomTop(x)));
     }
 
@@ -94,11 +94,9 @@ const game = (() => {
     const gameWidth = adContainerCompStyles.width.replace(/\D/g, '');
     const gameHeight = adContainerCompStyles.height.replace(/\D/g, '');
     function randomLeft(style) {
-        console.log('width: ' + getWidth(style));
         return Math.max(0, randomMax(gameWidth - getWidth(style)));
     }
     function randomTop(style) {
-        console.log('height:' + getWidth(style));
         return Math.max(0, randomMax(gameHeight - getHeight(style)));
     }
 
@@ -108,12 +106,41 @@ const game = (() => {
     }
     //removes ad object inside ads array
     function removeFromAds(index) {
-
+        ads.splice(index, 1);
     }
 
     //iterates through ads array & creates visuals
-    function renderAds(adsArray) {
+    function renderAds() {
+        for(let i = 0; i < ads.length; i++) {
+            const currentAd = ads[i];
+            const container = document.createElement('div');
+            container.classList.add('ad', currentAd.adStyle);
+            container.dataset.index = i; //note: i is represented as a string in the html
+            container.style.backgroundColor = currentAd.color;
+            container.style.left = `${currentAd.left}px`;
+            container.style.top = `${currentAd.top}px`;
 
+            const top = document.createElement('div');
+            const middle = document.createElement('div');
+            const bottom = document.createElement('div');
+            top.classList.add('top');
+            middle.classList.add('middle');  
+            bottom.classList.add('bottom');
+
+            const xBtn = document.createElement('button');
+            xBtn.textContent = 'X';
+            xBtn.classList.add('x-btn');
+            const text = document.createElement('p');
+            text.textContent = `${ads[i].text}`
+            const moreBtn = document.createElement('button');
+            moreBtn.textContent = 'CLICK NOW';
+
+            adContainer.appendChild(container);
+            container.append(top, middle, bottom);
+            top.appendChild(xBtn);
+            middle.appendChild(text);
+            bottom.appendChild(moreBtn);
+        }
     }
 
     //will use event delegation to detect buttons
@@ -124,6 +151,7 @@ const game = (() => {
     buildRandomAd();
     buildRandomAd();
     buildRandomAd();
+    renderAds();
     console.log(ads);
 })();
 

@@ -31,8 +31,6 @@ body {
     grid-template-rows: auto 1fr 1fr;
     border: 2px solid white;
     border-radius: 8px;
-    /*remove later*/
-    background-color: red;
 }
 
 /* will have 5 types of ads */
