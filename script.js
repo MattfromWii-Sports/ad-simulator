@@ -152,6 +152,7 @@ const game = (() => {
         if(clicked.nodeName == 'BUTTON' && clicked.classList.contains('x-btn')) {
             const index = clicked.parentNode.parentNode.dataset.index;
             removeFromAds(index);
+            score++;
             renderAds();
         //if anything within the ad other than x is clicked
         } else if(clicked.closest('.ad')) {
@@ -168,5 +169,5 @@ const game = (() => {
     console.log(ads);
 })();
 
-
-
+//To do: add gameplay loop, maybe a health bar / ad generation timer / score interface
+//To do: fix rem units for different sizes pls
