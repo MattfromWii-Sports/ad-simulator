@@ -1,20 +1,29 @@
-/* to do: please add fonts later on */
 @font-face {
     font-family: cartoon;
     font-weight: bold;
     src: url(Block\ Cartoon.ttf);
 }
-
-
 * {
     padding: 0;
     border: none;
     margin: 0;
 }
+
 html {
-    font-size: 15px;
+    font-size: 14px;
     font-family: cartoon, 'Courier New', Courier, monospace;
 }
+@media (min-width: 720px) {
+    html {
+        font-size: 16px;
+    }
+}
+@media (min-width: 1500px) {
+    html {
+        font-size: 18px;
+    }
+}
+
 body {
     overflow: hidden;
     min-height: 100svh;
@@ -26,10 +35,10 @@ body {
     position: absolute;
     --short-height: 9rem;
     --medium-height: 15rem;
-    --long-height: 30rem;
+    --long-height: 25rem;
     --short-width: 10rem;
     --medium-width: 18rem;
-    --long-width: 36rem;
+    --long-width: 28rem;
 }
 
 /*ad styles*/
@@ -98,6 +107,7 @@ body {
 }
 .bottom button {
     font-family: cartoon, 'Courier New', Courier, monospace;
+    font-weight: bold;
     border: 1px solid gray;
     background-color: whitesmoke;
     box-sizing: border-box;
