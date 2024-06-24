@@ -87,8 +87,8 @@ const game = (() => {
     }
     //for top and left properties (position: absolute)
     //will account for different style width & heights to avoid going out of border
-    const gameWidth = adContainerCompStyles.width.replace(/\D/g, '');
-    const gameHeight = adContainerCompStyles.height.replace(/\D/g, '');
+    const gameWidth = window.innerWidth;
+    const gameHeight = window.innerHeight;
     function randomLeft(style) {
         return randomMax(gameWidth - getWidth(style));
     }
