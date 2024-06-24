@@ -12,6 +12,7 @@ html {
 body {
     overflow: hidden;
     min-height: 100svh;
+    min-width: 100vw;
 }
 .ad-container {
     width: 100%;

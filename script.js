@@ -59,7 +59,7 @@ const game = (() => {
             case 'long': return adHeightStyle.long * rem + 4;
             case 'small':
             case 'short': return adHeightStyle.short * rem + 4;
-            default: console.log('bruh that is not a style');
+            default: return 0;
         }
     }
 
@@ -90,10 +90,10 @@ const game = (() => {
     const gameWidth = adContainerCompStyles.width.replace(/\D/g, '');
     const gameHeight = adContainerCompStyles.height.replace(/\D/g, '');
     function randomLeft(style) {
-        return Math.max(0, randomMax(gameWidth - getWidth(style)));
+        return randomMax(gameWidth - getWidth(style));
     }
     function randomTop(style) {
-        return Math.max(0, randomMax(gameHeight - getHeight(style)));
+        return randomMax(gameHeight - getHeight(style));
     }
 
     //puts ad objects inside the ads array
