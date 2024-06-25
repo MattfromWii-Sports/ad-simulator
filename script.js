@@ -3,8 +3,15 @@ const game = (() => {
     const adContainer = document.querySelector('.ad-container');
     //array that holds all ad objects
     const ads = [];
-    //tracks ads removed
+    //tracks objectives completed
     let score = 0;
+    //default interval of ad creation in milliseconds
+    const defaultInterval = 5000;
+    //tracks difficulty multiplier (less time per ad creation)
+    //do not let value go equal/higher than defaultInterval if you do not want to create lag
+    let difficulty = 0;
+
+    //ad logic
 
     class ad {
         constructor(text, color, adStyle, x, y) {
@@ -18,7 +25,7 @@ const game = (() => {
     }
 
     //ad text options
-    const adText = ['Buy Now!', 'Click Me!', 'Free Money', 'Send Help, there is an intruder...', 'Women in the area', 'Dogs in the area', 'Free Ram Upgrades', 'Hotel Travel!!!', '90% Discount', 'Tap Me :) or else...', ':))))))'];
+    const adText = ['Buy Now!', 'Click Me!', 'Free Money', 'Send Help, intruder...', 'Women in the area', 'Dogs in the area', 'Free Ram Upgrades', 'Hotel Travel!!!', '90% Discount', 'Tap Me :) or else...', ':))))))'];
 
     //ad style option: 5 variations (objects)
     const adStyles = ['normal', 'big', 'small' ,'short', 'long'];
@@ -98,18 +105,43 @@ const game = (() => {
 
     //puts ad objects inside the ads array
     function addToAds(adObject) {
+        if(ads.length > 50) {
+            console.log('max ad quantity reached');
+            return 0;
+        }
         ads.push(adObject);
     }
     //removes ad object inside ads array
     function removeFromAds(index) {
         ads.splice(index, 1);
     }
+
+    //objective logic
+
+    //array that holds all objectives objects
+    const objectives = [];
+
+    class objective {
+        constructor(color, top, left) {
+            this.color = color;
+            this.top = top;
+            this.left = left;
+        }
+    }
+
+    function addToObjectives(objectiveObject) {
+        objectives.push(objectiveObject);
+    }
+
+    function buildRandomObjective() {
+        addToObjectives(new objective())
+    }
+
     function clearGame() {
         adContainer.innerHTML = ''; //remove existing generated html
     }
-
-    //iterates through ads array & creates visuals
-    function renderAds() {
+    //iterates through ads and objectives arrays to creates visuals
+    function renderAll() {
         clearGame();
         for(let i = 0; i < ads.length; i++) {
             const currentAd = ads[i];
@@ -145,29 +177,43 @@ const game = (() => {
         console.log(ads);
     }
 
-    //will use event delegation to detect buttons
+    //event delegation to detect buttons
     adContainer.addEventListener('click', (e) => {
         const clicked = e.target;
         //if the x button is clicked
         if(clicked.nodeName == 'BUTTON' && clicked.classList.contains('x-btn')) {
             const index = clicked.parentNode.parentNode.dataset.index;
             removeFromAds(index);
-            score++;
-            renderAds();
+            renderAll();
         //if anything within the ad other than x is clicked
         } else if(clicked.closest('.ad')) {
             buildRandomAd();
             buildRandomAd();
-            renderAds();
+            renderAll();
         }
     });
 
+    //interval used to control ad intervals
+    let interval = null;
+    function startInterval() {
+        interval = setInterval(function() {
+            buildRandomAd();
+            renderAll();
+        }, defaultInterval - difficulty);
+    }
+    //stops interval
+    function endInterval() {
+        clearInterval(interval);
+        interval = null;
+    }
+
     buildRandomAd();
     buildRandomAd();
     buildRandomAd();
-    renderAds();
+    renderAll();
+    startInterval();
     console.log(ads);
+
 })();
 
 //To do: add gameplay loop, maybe a health bar / ad generation timer / score interface
-//To do: fix rem units for different sizes pls
