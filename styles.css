@@ -10,12 +10,12 @@
 }
 
 html {
-    font-size: 14px;
+    font-size: 12px;
     font-family: cartoon, 'Courier New', Courier, monospace;
 }
 @media (min-width: 720px) {
     html {
-        font-size: 16px;
+        font-size: 15px;
     }
 }
 @media (min-width: 1500px) {
@@ -53,27 +53,22 @@ body {
 
 /* will have 5 types of ads */
 /* Fututre note: maybe replace them with css variables ;) */
-/*normal*/
 .normal {
     width: var(--medium-width);
     height: var(--medium-height);
 }
-/*big*/
 .big {
     width: var(--long-width);
     height: var(--long-height);
 }
-/*small*/
 .small {
     width: var(--short-width);
     height: var(--short-height);
 }
-/*long*/
 .long {
     width: var(--medium-width);
     height: var(--long-height);
 }
-/*short*/
 .short {
     width: var(--medium-width);
     height: var(--short-height);
@@ -168,4 +163,14 @@ body {
 .short .bottom button {
     padding: 4px;
     font-size: 0.8rem;
+}
+
+/* objective styles */
+.objective {
+    padding: 8px 2.5rem;
+    position: absolute;
+    font-size: 1rem;
+    font-weight: bold;
+    font-family: comic, 'Courier New', Courier, monospace;
+    border: 2px solid black;
 }
