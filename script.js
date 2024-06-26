@@ -5,11 +5,12 @@ const game = (() => {
     const ads = [];
     //tracks objectives completed
     let score = 0;
-    //default interval of ad creation in milliseconds
-    const defaultInterval = 5000;
-    //tracks difficulty multiplier (less time per ad creation)
-    //do not let value go equal/higher than defaultInterval if you do not want to create lag
-    let difficulty = 0;
+    //tracks difficulty multiplier (lower value = less time per ad creation)
+    //in milliseconds
+    let difficulty = 3000;
+    //for viewport width and height
+    const gameWidth = window.innerWidth;
+    const gameHeight = window.innerHeight;
 
     //ad logic
 
@@ -50,7 +51,8 @@ const game = (() => {
             case 'long': return adWidthStyle.medium * rem + 4;
             case 'big': return adWidthStyle.long * rem + 4;
             case 'small': return adWidthStyle.short * rem + 4;
-            default: console.log('bruh that is not a style');
+            case 'objective' : return objective.width + 4; //its already in pixels
+            default: 0;
         }
     }
     const adHeightStyle = {
@@ -66,6 +68,7 @@ const game = (() => {
             case 'long': return adHeightStyle.long * rem + 4;
             case 'small':
             case 'short': return adHeightStyle.short * rem + 4;
+            case 'objective' : return objective.height + 4; //its already in pixels
             default: return 0;
         }
     }
@@ -94,8 +97,6 @@ const game = (() => {
     }
     //for top and left properties (position: absolute)
     //will account for different style width & heights to avoid going out of border
-    const gameWidth = window.innerWidth;
-    const gameHeight = window.innerHeight;
     function randomLeft(style) {
         return randomMax(gameWidth - getWidth(style));
     }
@@ -118,31 +119,35 @@ const game = (() => {
 
     //objective logic
 
-    //array that holds all objectives objects
-    const objectives = [];
-
-    class objective {
-        constructor(color, top, left) {
-            this.color = color;
-            this.top = top;
-            this.left = left;
-        }
+    const objective = {
+        top: 100,
+        left: 100,
+        width: 0,
+        height: 0,
     }
-
-    function addToObjectives(objectiveObject) {
-        objectives.push(objectiveObject);
+    function updateObjWidthHeight() {
+        const objBtn = window.getComputedStyle(document.querySelector('.objective'));
+        objective.width = parseInt(objBtn.width.replace(/\D/g, ''));
+        objective.height = parseInt(objBtn.height.replace(/\D/g, ''));
     }
-
     function buildRandomObjective() {
-        addToObjectives(new objective())
+        
     }
 
+    //starts game
+    function startGame() {
+        renderAll(); //only objective present, no ads yet
+        //to get objective width & height for calculations
+        updateObjWidthHeight(); //must be before renderAll to work
+        startInterval();
+    }
     function clearGame() {
         adContainer.innerHTML = ''; //remove existing generated html
     }
     //iterates through ads and objectives arrays to creates visuals
     function renderAll() {
         clearGame();
+        //render ads
         for(let i = 0; i < ads.length; i++) {
             const currentAd = ads[i];
             const container = document.createElement('div');
@@ -174,7 +179,14 @@ const game = (() => {
             bottom.appendChild(moreBtn);
         }
         //remove later
-        console.log(ads);
+        console.log(ads, objective, score);
+        //render objective
+        const obj = document.createElement('button');
+        obj.classList.add('objective');
+        obj.textContent = 'CONTINUE';
+        obj.style.top = `${objective.top}px`;
+        obj.style.left = `${objective.left}px`;
+        adContainer.appendChild(obj);
     }
 
     //event delegation to detect buttons
@@ -190,6 +202,12 @@ const game = (() => {
             buildRandomAd();
             buildRandomAd();
             renderAll();
+        //if an objective is clicked
+        } else if(clicked.nodeName == 'BUTTON' && clicked.classList.contains('objective')) {
+            score++;
+            objective.top = randomTop('objective');
+            objective.left = randomLeft('objective');
+            renderAll();
         }
     });
 
@@ -199,7 +217,7 @@ const game = (() => {
         interval = setInterval(function() {
             buildRandomAd();
             renderAll();
-        }, defaultInterval - difficulty);
+        }, difficulty + 2000);
     }
     //stops interval
     function endInterval() {
@@ -207,13 +225,10 @@ const game = (() => {
         interval = null;
     }
 
-    buildRandomAd();
-    buildRandomAd();
-    buildRandomAd();
-    renderAll();
-    startInterval();
-    console.log(ads);
-
+    startGame();
 })();
 
-//To do: add gameplay loop, maybe a health bar / ad generation timer / score interface
+//To do: interval generation timer logic
+// objectives logic and functions
+// score interface
+
