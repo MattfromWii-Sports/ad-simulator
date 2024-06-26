@@ -7,7 +7,7 @@ const game = (() => {
     let score = 0;
     //tracks difficulty multiplier (lower value = less time per ad creation)
     //in milliseconds
-    let difficulty = 3000;
+    let difficulty = 2000;
     //for viewport width and height
     const gameWidth = window.innerWidth;
     const gameHeight = window.innerHeight;
@@ -130,9 +130,6 @@ const game = (() => {
         objective.width = parseInt(objBtn.width.replace(/\D/g, ''));
         objective.height = parseInt(objBtn.height.replace(/\D/g, ''));
     }
-    function buildRandomObjective() {
-        
-    }
 
     //starts game
     function startGame() {
@@ -179,7 +176,7 @@ const game = (() => {
             bottom.appendChild(moreBtn);
         }
         //remove later
-        console.log(ads, objective, score);
+        console.log(ads, objective, score, difficulty);
         //render objective
         const obj = document.createElement('button');
         obj.classList.add('objective');
@@ -187,6 +184,28 @@ const game = (() => {
         obj.style.top = `${objective.top}px`;
         obj.style.left = `${objective.left}px`;
         adContainer.appendChild(obj);
+    }
+
+    //to update the difficulty
+    function updateDifficulty(score) {
+        if(score === 5) {
+            difficulty = 1500;
+            //end current interval, start new one with updated variables
+            endInterval();
+            startInterval();
+        } else if(score === 10) {
+            difficulty = 1000;
+            endInterval();
+            startInterval();
+        } else if(score === 15) {
+            difficulty = 500;
+            endInterval();
+            startInterval();
+        } else if(score === 20) {
+            difficulty = 0;
+            endInterval();
+            startInterval();
+        }
     }
 
     //event delegation to detect buttons
@@ -205,6 +224,7 @@ const game = (() => {
         //if an objective is clicked
         } else if(clicked.nodeName == 'BUTTON' && clicked.classList.contains('objective')) {
             score++;
+            updateDifficulty(score);
             objective.top = randomTop('objective');
             objective.left = randomLeft('objective');
             renderAll();
@@ -217,7 +237,7 @@ const game = (() => {
         interval = setInterval(function() {
             buildRandomAd();
             renderAll();
-        }, difficulty + 2000);
+        }, difficulty + 1300);
     }
     //stops interval
     function endInterval() {
@@ -228,7 +248,8 @@ const game = (() => {
     startGame();
 })();
 
-//To do: interval generation timer logic
-// objectives logic and functions
+//To do: 
 // score interface
+// start menu
+// end menu
 
