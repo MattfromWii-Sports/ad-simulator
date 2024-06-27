@@ -11,6 +11,8 @@ const game = (() => {
     //for viewport width and height
     const gameWidth = window.innerWidth;
     const gameHeight = window.innerHeight;
+    //to signify the game start
+    let gameStart = false;
 
     //ad logic
 
@@ -121,7 +123,7 @@ const game = (() => {
 
     const objective = {
         top: 100,
-        left: 100,
+        left: 75,
         width: 0,
         height: 0,
     }
@@ -131,9 +133,17 @@ const game = (() => {
         objective.height = parseInt(objBtn.height.replace(/\D/g, ''));
     }
 
+    //sets starting game elements
+    function setGame() {
+        renderAll();
+        endInterval(); //just to be safe
+        const p = document.createElement('p');
+        p.classList.add('start');
+        p.textContent = 'REACH 30 POINTS TO WIN';
+        adContainer.appendChild(p);
+    }
     //starts game
     function startGame() {
-        renderAll(); //only objective present, no ads yet
         //to get objective width & height for calculations
         updateObjWidthHeight(); //must be before renderAll to work
         startInterval();
@@ -223,10 +233,15 @@ const game = (() => {
             renderAll();
         //if an objective is clicked
         } else if(clicked.nodeName == 'BUTTON' && clicked.classList.contains('objective')) {
+            if(gameStart === false) {
+                gameStart = true;
+                startGame();
+            }
             score++;
             updateDifficulty(score);
             objective.top = randomTop('objective');
             objective.left = randomLeft('objective');
+            buildRandomAd();
             renderAll();
         }
     });
@@ -237,7 +252,7 @@ const game = (() => {
         interval = setInterval(function() {
             buildRandomAd();
             renderAll();
-        }, difficulty + 1300);
+        }, difficulty + 1500);
     }
     //stops interval
     function endInterval() {
@@ -245,11 +260,10 @@ const game = (() => {
         interval = null;
     }
 
-    startGame();
+    setGame();
 })();
 
 //To do: 
 // score interface
-// start menu
 // end menu
 

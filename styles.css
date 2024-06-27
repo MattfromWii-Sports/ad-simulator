@@ -41,6 +41,14 @@ body {
     --long-width: 28rem;
 }
 
+.start {
+    position: absolute;
+    font-size: 1.6rem;
+    font-weight: bold;
+    top: 50px;
+    left: 75px;
+}
+
 /*ad styles*/
 .ad {
     font-family: cartoon, 'Courier New', Courier, monospace;
@@ -178,4 +186,6 @@ body {
     text-align: center;
     border: 2px solid black;
     z-index: 0;
+    top: 100px;
+    left: 75px;
 }
