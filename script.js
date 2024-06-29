@@ -5,6 +5,7 @@ const game = (() => {
     const ads = [];
     //tracks objectives completed
     let score = 0;
+    const scoreDiv = document.querySelector('.score');
     //tracks difficulty multiplier (lower value = less time per ad creation)
     //in milliseconds
     let difficulty = 2000;
@@ -122,8 +123,8 @@ const game = (() => {
     //objective logic
 
     const objective = {
-        top: 100,
-        left: 75,
+        top: 150,
+        left: 70,
         width: 0,
         height: 0,
     }
@@ -237,7 +238,7 @@ const game = (() => {
                 gameStart = true;
                 startGame();
             }
-            score++;
+            updateScore(++score); //increment by 1 first then update
             updateDifficulty(score);
             objective.top = randomTop('objective');
             objective.left = randomLeft('objective');
@@ -258,6 +259,12 @@ const game = (() => {
     function endInterval() {
         clearInterval(interval);
         interval = null;
+    }
+
+
+    //updates score
+    function updateScore(score) {
+        scoreDiv.textContent = score;
     }
 
     setGame();
