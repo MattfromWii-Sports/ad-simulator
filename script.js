@@ -2,7 +2,7 @@ const game = (() => {
     //reference to ad container
     const adContainer = document.querySelector('.ad-container');
     //array that holds all ad objects
-    const ads = [];
+    let ads = [];
     //tracks objectives completed
     let score = 0;
     const scoreDiv = document.querySelector('.score');
@@ -111,6 +111,7 @@ const game = (() => {
     function addToAds(adObject) {
         if(ads.length > 50) {
             console.log('max ad quantity reached');
+            showEndScreen('YOU LOST!');
             return 0;
         }
         ads.push(adObject);
@@ -132,6 +133,11 @@ const game = (() => {
         const objBtn = window.getComputedStyle(document.querySelector('.objective'));
         objective.width = parseInt(objBtn.width.replace(/\D/g, ''));
         objective.height = parseInt(objBtn.height.replace(/\D/g, ''));
+    }
+    //resets objective to default
+    function resetObjective() {
+        objective.top = 150;
+        objective.left = 70;
     }
 
     //sets starting game elements
@@ -244,6 +250,10 @@ const game = (() => {
             objective.left = randomLeft('objective');
             buildRandomAd();
             renderAll();
+            //check if they win
+            if(score >= 30) {
+                showEndScreen('YOU WIN!');
+            }
         }
     });
 
@@ -267,9 +277,41 @@ const game = (() => {
         scoreDiv.textContent = score;
     }
 
+    //reference to modal
+    const modal = document.querySelector('.modal');
+    const resultElem = document.querySelector('.result');
+    const endScoreElem = document.querySelector('.end-score');
+    //shows end screen
+    function showEndScreen(text) {
+        endInterval();
+        modal.classList.add('open');
+        resultElem.textContent = text;
+        endScoreElem.textContent = `SCORE: ${score}`;
+    }
+
+    //restart button
+    const restartBtn = document.querySelector('.restart');
+    restartBtn.addEventListener('click', resetGame);
+
+    //reset game
+    function resetGame() {
+        //remove all elements on board
+        clearGame();
+        //reset variables
+        score = 0;
+        difficulty = 2000;
+        gameStart = false;
+        ads = []; //ads array
+
+        endInterval();
+        resetObjective(); //for the top/left positioning
+        scoreDiv.textContent = 0;
+
+        //reset modal
+        modal.classList.remove('open');
+
+        setGame(); //must be last
+    }
+
     setGame();
 })();
-
-//To do: 
-// end menu
-
