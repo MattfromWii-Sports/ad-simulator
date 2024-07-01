@@ -271,6 +271,5 @@ const game = (() => {
 })();
 
 //To do: 
-// score interface
 // end menu
 

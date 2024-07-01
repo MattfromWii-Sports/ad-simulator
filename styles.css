@@ -196,3 +196,35 @@ body {
     top: 100px;
     left: 70px;
 }
+
+/* game end */
+.modal {
+    position: absolute;
+    background-color: rgb(200, 200, 200, 0.4);
+    z-index: 2;
+    display: none;
+    height: 100%;
+    width: 100%;
+}
+.open {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-direction: column;
+    gap: 12px;
+}
+.result {
+    font-size: 3rem;
+    font-weight: bold;
+}
+.end-score {
+    font-size: 1.5rem;
+    margin-bottom: 10px;
+}
+.restart {
+    font-size: 1.4rem;
+    font-weight: bold;
+    padding: 8px;
+    width: 10rem;
+    border: 3px solid black;
+}
