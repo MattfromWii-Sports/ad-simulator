@@ -192,8 +192,6 @@ const game = (() => {
             middle.appendChild(text);
             bottom.appendChild(moreBtn);
         }
-        //remove later
-        console.log(ads, objective, score, difficulty);
         //render objective
         const obj = document.createElement('button');
         obj.classList.add('objective');
