@@ -10,8 +10,13 @@
 }
 
 html {
-    font-size: 12px;
+    font-size: 8px;
     font-family: cartoon, 'Courier New', Courier, monospace;
+}
+@media (min-width: 400px) {
+    html {
+        font-size: 12px;
+    }
 }
 @media (min-width: 720px) {
     html {
@@ -26,7 +31,7 @@ html {
 
 body {
     overflow: hidden;
-    min-height: 100svh;
+    height: 100svh;
     min-width: 100vw;
 }
 .score {
@@ -42,10 +47,10 @@ body {
     position: absolute;
     --short-height: 9rem;
     --medium-height: 15rem;
-    --long-height: 25rem;
+    --long-height: 24rem;
     --short-width: 10rem;
     --medium-width: 18rem;
-    --long-width: 28rem;
+    --long-width: 25rem;
 }
 
 .start {
@@ -166,7 +171,7 @@ body {
 }
 
 .long p {
-    font-size: 1.5rem;
+    font-size: 1.4rem;
 }
 .long .bottom button{
     padding: 1rem;
