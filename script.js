@@ -312,4 +312,6 @@ const game = (() => {
     }
 
     setGame();
+    console.log(gameWidth, gameHeight);
 })();
+
